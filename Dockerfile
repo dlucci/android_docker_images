@@ -1,5 +1,7 @@
 FROM ubuntu:15.10
 
+ENV DEBIAN_FRONTEND noninteractive
+
 MAINTAINER ksoichiro "soichiro.kashima@gmail.com"
 
 RUN apt-get update -qq
@@ -8,18 +10,18 @@ RUN apt-get update -qq
 RUN apt-get install -y --force-yes openjdk-7-jdk
 
 # Main Android SDK
-#RUN apt-get install -y --no-install-recommends wget
-#RUN cd /opt && wget -q https://dl.google.com/android/android-sdk_r22.6-linux.tgz
-#RUN cd /opt && tar xzf android-sdk_r22.6-linux.tgz
-#RUN cd /opt && rm -f android-sdk_r22.6-linux.tgz
+RUN apt-get install -y --no-install-recommends wget
+RUN cd /opt && wget -q https://dl.google.com/android/android-sdk_r22.6-linux.tgz
+RUN cd /opt && tar xzf android-sdk_r22.6-linux.tgz
+RUN cd /opt && rm -f android-sdk_r22.6-linux.tgz
 
 # Other tools and resources of Android SDK
-#ENV ANDROID_HOME /opt/android-sdk-linux
-#ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-#RUN echo y | android update sdk --filter platform-tools,build-tools-19.0.3,android-17,extra-android-support --no-ui --force-yes
+ENV ANDROID_HOME /opt/android-sdk-linux
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+RUN echo y | android update sdk --filter platform-tools,build-tools-19.0.3,android-17,extra-android-support --no-ui --force
 
 # Git to pull external repositories of Android app projects
-#RUN apt-get install -y --no-install-recommends git
+RUN apt-get install -y --no-install-recommends git
 
 # Cleaning
-#RUN apt-get clean
+RUN apt-get clean
